@@ -1,0 +1,223 @@
+{% include 'promotions/navbar.html' %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .form-container, .promotion-list, .entity-container {
+            margin-bottom: 20px;
+        }
+        .entity-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .entity-list {
+            width: 45%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .entity-list h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .clickable-row {
+            cursor: pointer;
+        }
+    </style>
+    <script>
+     function loadEntities(promotionId, filterType) {
+    fetch(`/promotions/load_entities/?promotion_id=${promotionId}&filter_type=${filterType}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('available-entities').innerHTML = data.available;
+            document.getElementById('assigned-entities').innerHTML = data.assigned;
+        });
+}
+
+        function selectPromotion(promotionId) {
+            document.getElementById('selected-promotion').value = promotionId;
+            document.getElementById('filter-section').style.display = 'block';
+        }
+
+        function applyFilter() {
+            const promotionId = document.getElementById('selected-promotion').value;
+            const filterType = document.querySelector('input[name="filter_type"]:checked').value;
+            loadEntities(promotionId, filterType);
+        }
+    </script>
+<script>
+    function loadEntities(promotionId, filterType) {
+        fetch(`/promotions/load_entities/?promotion_id=${promotionId}&filter_type=${filterType}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('available-entities').innerHTML = data.available;
+                document.getElementById('assigned-entities').innerHTML = data.assigned;
+            });
+    }
+
+    function selectPromotion(promotionId) {
+        document.getElementById('selected-promotion').value = promotionId;
+        document.getElementById('filter-section').style.display = 'block';
+    }
+
+    function applyFilter() {
+        const promotionId = document.getElementById('selected-promotion').value;
+        const filterType = document.querySelector('input[name="filter_type"]:checked').value;
+        loadEntities(promotionId, filterType);
+    }
+
+    $(document).ready(function() {
+        $('#available-entities').on('dblclick', 'tr', function() {
+            let entityId = $(this).find('td:first').text();
+            let promotionId = $('#selected-promotion').val();
+            let filterType = $('input[name="filter_type"]:checked').val();
+
+            console.log("Assigning entity:", { entityId, promotionId, filterType });
+
+            $.ajax({
+                url: '/promotions/assign_entity/',
+                method: 'POST',
+                data: {
+                    'entity_id': entityId,
+                    'promotion_id': promotionId,
+                    'filter_type': filterType,
+                    'action': 'assign',
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function() {
+                    let row = $(`[data-id="${entityId}"]`).clone();
+                    row.appendTo('#assigned-entities');
+                    $(`[data-id="${entityId}"]`).remove();
+                },
+                error: function() {
+                    alert('Error assigning entity.');
+                }
+            });
+        });
+
+        $('#assigned-entities').on('dblclick', 'tr', function() {
+            let entityId = $(this).find('td:first').text();
+            let promotionId = $('#selected-promotion').val();
+            let filterType = $('input[name="filter_type"]:checked').val();
+
+            console.log("Unassigning entity:", { entityId, promotionId, filterType });
+
+            $.ajax({
+                url: '/promotions/assign_entity/',
+                method: 'POST',
+                data: {
+                    'entity_id': entityId,
+                    'promotion_id': promotionId,
+                    'filter_type': filterType,
+                    'action': 'unassign',
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function() {
+                    let row = $(`[data-id="${entityId}"]`).clone();
+                    row.appendTo('#available-entities');
+                    $(`[data-id="${entityId}"]`).remove();
+                },
+                error: function() {
+                    alert('Error unassigning entity.');
+                }
+            });
+        });
+    });
+</script>
+<body>
+    <h1>Assign Promotions</h1>
+
+    <div class="form-container">
+        <form method="get">
+            {{ form.as_p }}
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="promotion-list">
+        <h2>Promotions</h2>
+        <table>
+            <tr>
+                <th>Promotion Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+            {% for promo in promotions %}
+            <tr class="clickable-row" onclick="selectPromotion('{{ promo.Promotion_ID }}')">
+                <td>{{ promo.Promotion_Description }}</td>
+                <td>{{ promo.Start_Date }}</td>
+                <td>{{ promo.End_Date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <input type="hidden" id="selected-promotion" value="">
+
+    <div id="filter-section" style="display: none;">
+        <h2>Filter By</h2>
+        <div class="form-container">
+            <label>
+                <input type="radio" name="filter_type" value="users" onchange="applyFilter()"> Users
+            </label>
+            <label>
+                <input type="radio" name="filter_type" value="clients" onchange="applyFilter()"> Clients
+            </label>
+        </div>
+
+        <div class="entity-container">
+            <div class="entity-list">
+                <h3>Available</h3>
+                <table id="available-entities">
+                    <!-- Content will be loaded via AJAX -->
+                </table>
+            </div>
+
+            <div class="entity-list">
+                <h3>Assigned</h3>
+                <table id="assigned-entities">
+                    <!-- Content will be loaded via AJAX -->
+                </table>
+            </div>
+        </div>
+    </div>
+<script>
+        $(document).ready(function() {
+            $('#promotion-table').on('click', 'tr', function() {
+                let promotionId = $(this).data('promotion-id');
+                loadEntities(promotionId);
+            });
+
+
+
+            $('#available-entities').on('dblclick', 'tr', function() {
+                let row = $(this).clone();
+                row.appendTo('#assigned-entities');
+                $(this).remove();
+            });
+
+            $('#assigned-entities').on('dblclick', 'tr', function() {
+                let row = $(this).clone();
+                row.appendTo('#available-entities');
+                $(this).remove();
+            });
+        });
+    </script>
+</body>

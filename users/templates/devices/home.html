@@ -1,0 +1,95 @@
+{% include 'devices/navbar.html' %}
+
+
+<body>
+ <form method="GET" action="{% url 'devices' %}" class="form-inline mb-4">
+            <div class="form-group mr-3">
+                <label for="username" class="mr-2">User Name:</label>
+                <input type="text" id="username" name="username" class="form-control" value="{{ request.GET.username }}">
+            </div>
+     <div class="form-group mr-3">
+                <label for="device_serial" class="mr-2">Device Serial:</label>
+                <input type="text" id="device_serial" name="device_serial" class="form-control" value="{{ request.GET.device_serial }}">
+            </div>
+            <div class="form-group mr-3">
+                <label for="device_status" class="mr-2">Device Status:</label>
+                <select id="device_status" name="device_status" class="form-control">
+                    <option value="">All</option>
+                    <option value="Good" {% if request.GET.device_status == 'Good' %}selected{% endif %}>Good</option>
+                    <option value="Broken" {% if request.GET.device_status == 'Broken' %}selected{% endif %}>Broken</option>
+                    <option value="Spare" {% if request.GET.device_status == 'Spare' %}selected{% endif %}>Spare</option>
+                </select>
+            </div>
+            <div class="form-group mr-3">
+                <label for="device_type" class="mr-2">Device Type:</label>
+                <select id="device_type" name="device_type" class="form-control">
+                    <option value="">All</option>
+                    <option value="HHT" {% if request.GET.device_type == 'HHT' %}selected{% endif %}>HHT</option>
+                    <option value="Printer" {% if request.GET.device_type == 'Printer' %}selected{% endif %}>Printer</option>
+                </select>
+            </div>
+            <div class="form-group mr-3">
+                <label for="device_brand" class="mr-2">Device Brand:</label>
+                <select id="device_brand" name="device_brand" class="form-control">
+                    <option value="">All</option>
+                    <option value="MOTOROLA MC65" {% if request.GET.device_brand == 'MOTOROLA MC65' %}selected{% endif %}>MOTOROLA MC65</option>
+                    <option value="Samsung" {% if request.GET.device_brand == 'Samsung' %}selected{% endif %}>Samsung</option>
+                    <option value="Brother" {% if request.GET.device_brand == 'Brother' %}selected{% endif %}>Brother</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#defineDeviceModal">
+            Define Device
+        </button>
+    <h1>Device Registrations</h1>
+    <table border="1">
+        <tr>
+            <th>User Code</th>
+            <th>User Name</th>
+            <th>Device Serial</th>
+            <th>Device Type</th>
+            <th>Device Brand</th>
+            <th>Device Status</th>
+        </tr>
+        {% for device in devices %}
+        <tr>
+            <td>{{ device.UserCode }}</td>
+            <td>{{ device.UserName }}</td>
+            <td>{{ device.DeviceSerial }}</td>
+            <td>{{ device.DeviceType }}</td>
+            <td>{{ device.DeviceBrand }}</td>
+            <td>{{ device.DeviceStatus }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+ <script>
+        $(document).ready(function(){
+            $('#defineDeviceModal').on('show.bs.modal', function (event) {
+                // Appelez l'API ou chargez la liste des appareils
+                $.ajax({
+                    url: '{% url "load_devices" %}', // Changez l'URL vers l'API de votre application pour charger les appareils
+                    method: 'GET',
+                    success: function(data) {
+                        // Vider le contenu précédent
+                        $('#devicesTableBody').empty();
+
+                        // Ajouter les nouvelles lignes au tableau
+                        data.devices.forEach(function(device) {
+                            $('#devicesTableBody').append(`
+                                <tr>
+                                    <td>${device.DeviceSerial}</td>
+                                    <td>${device.DeviceStatus}</td>
+                                    <td>${device.DeviceBrand}</td>
+                                    <td>${device.DeviceType}</td>
+                                </tr>
+                            `);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

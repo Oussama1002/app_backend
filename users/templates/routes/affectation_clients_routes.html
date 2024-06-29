@@ -1,0 +1,318 @@
+{% include 'routes/navbar.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Route Assignment</title>
+    <style>
+        /* Basic reset for padding and margins */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #555;
+        }
+
+        #routeSelection {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #clientsContainer {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            width: 45%;
+        }
+
+        .section h3 {
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .client-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .client-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .removeClient {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .removeClient:hover {
+            background-color: #c0392b;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Modal styles */
+        #routeListModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
+        }
+
+        #routeListModalContent {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f9;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h2>Client Route Assignment</h2>
+
+    <div id="routeSelection">
+        <label for="routes">Select Route: </label>
+        <select id="routes" name="routes" onchange="loadRouteClients(this.value)">
+            <option value="">Select a route</option>
+            <!-- Route options will be populated here -->
+        </select>
+        <button id="findRoutes" onclick="findRoutes()">Find</button>
+    </div>
+
+    <div id="clientsContainer">
+        <div class="section" id="availableClientsSection">
+            <h3>Available Clients</h3>
+            <ul id="availableClients" class="client-list">
+                <!-- Clients will be dynamically inserted here -->
+            </ul>
+        </div>
+        <div class="section" id="assignedClientsSection">
+            <h3>Assigned Clients</h3>
+            <ul id="assignedClients" class="client-list">
+                <!-- Clients assigned to the route will be dynamically inserted here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal for displaying the route list -->
+    <div id="routeListModal">
+        <div id="routeListModalContent">
+            <h3>Select a Route</h3>
+            <table id="routeListTable">
+                <thead>
+                    <tr>
+                        <th>Route ID</th>
+                        <th>Route Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="routeList">
+                    <!-- Route list will be dynamically populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch and display route list in a table
+        function findRoutes() {
+            $.ajax({
+                url: "{% url 'get_routes' %}",
+                success: function(data) {
+                    $('#routeList').empty(); // Clear any existing rows
+                    data.routes.forEach(function(route) {
+                        $('#routeList').append(
+                            '<tr>' +
+                            '<td>' + route.Route_ID + '</td>' +
+                            '<td>' + route.Route_Description + '</td>' +
+                            '<td><button onclick="selectRoute(\'' + route.Route_ID + '\', \'' + route.Route_Description + '\')">Select</button></td>' +
+                            '</tr>'
+                        );
+                    });
+                    $('#routeListModal').show();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch routes:', error);
+                    alert('Failed to fetch routes: ' + error);
+                }
+            });
+        }
+
+        // Function to handle the selection of a route
+        function selectRoute(routeId, routeDescription) {
+            $('#routes').append(new Option(routeDescription, routeId)).val(routeId).change();
+            $('#routeListModal').hide();
+        }
+
+        // Function to load route clients based on selected route
+        function loadRouteClients(routeId) {
+            if (routeId) {
+                $.ajax({
+                    url: "{% url 'get_route_clients' %}",
+                    data: { route_id: routeId },
+                    success: function(data) {
+                        $('#availableClients').empty();
+                        data.available_clients.forEach(function(client) {
+                            $('#availableClients').append(
+                                '<li>' + client.Client_Name +
+                                '<button onclick="assignClient(' + client.Client_ID + ')">Assign</button></li>'
+                            );
+                        });
+
+                        $('#assignedClients').empty();
+                        data.assigned_clients.forEach(function(client) {
+                            $('#assignedClients').append(
+                                '<li>' + client.Client_Name +
+                                '<button class="removeClient" onclick="removeClient(' + client.Client_ID + ')">Remove</button></li>'
+                            );
+                        });
+                        $('#clientsContainer').show();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to fetch route clients:', error);
+                        alert('Failed to fetch route clients: ' + error);
+                    }
+                });
+            } else {
+                $('#clientsContainer').hide();
+            }
+        }
+
+        // Function to assign a client to a route
+        function assignClient(clientId) {
+            var routeId = $('#routes').val();
+            if (clientId && routeId) {
+                $.ajax({
+                    url: "{% url 'affectation_clients_routes' %}",
+                    type: 'POST',
+                    data: {
+                        client_id: clientId,
+                        route_id: routeId,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            alert('Client assigned successfully');
+                            loadRouteClients(routeId); // Reload clients to reflect changes
+                        } else {
+                            alert('Failed to assign client: ' + data.error);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Failed to assign client: ' + error);
+                    }
+                });
+            } else {
+                alert('Please select a client and a route');
+            }
+        }
+
+        // Function to remove a client from the route
+        function removeClient(clientId) {
+            var routeId = $('#routes').val();
+            if (clientId && routeId) {
+                $.ajax({
+                    url: "{% url 'assign_client_to_route' %}",
+                    type: 'POST',
+                    data: {
+                        client_id: clientId,
+                        route_id: routeId,
+                        action: 'remove',
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            alert('Client removed successfully');
+                            loadRouteClients(routeId); // Reload clients to reflect changes
+                        } else {
+                            alert('Failed to remove client: ' + data.error);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Failed to remove client: ' + error);
+                    }
+                });
+            } else {
+                alert('Invalid client or route');
+            }
+        }
+    </script>
+</body>
+</html>

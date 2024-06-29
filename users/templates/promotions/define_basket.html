@@ -1,0 +1,45 @@
+<!-- define_basket.html -->
+{% include 'promotions/navbar.html' %}
+
+
+<!-- Button to show popup for adding new basket -->
+    <button onclick="showNewBasketPopup()">New Basket</button>
+
+    <!-- Popup form for adding new basket -->
+    <div id="newBasketPopup" style="display: none;">
+        <form method="post" action="{% url 'add_basket' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Basket</button>
+        </form>
+    </div>
+    <h1>Define Baskets</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item Basket ID</th>
+                <th>Item Basket Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for basket in baskets %}
+            <tr>
+                <td>{{ basket.item_basket_id }}</td>
+                <td>{{ basket.item_basket_description }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No baskets found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    <script>
+        function showNewBasketPopup() {
+            document.getElementById('newBasketPopup').style.display = 'block';
+        }
+    </script>

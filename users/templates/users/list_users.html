@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>User List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>UserCode</th>
+                <th>UserName</th>
+                <th>PhoneNumber</th>
+                <th>Grouping</th>
+                <th>IsBlocked</th>
+                <th>LoginName</th>
+                <th>AreaCode</th>
+                <th>CityID</th>
+                <th>RouteCode</th>
+                <th>ParentCode</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.UserCode }}</td>
+                <td>{{ user.UserName }}</td>
+                <td>{{ user.PhoneNumber }}</td>
+                <td>{{ user.Grouping }}</td>
+                <td>{{ user.IsBlocked }}</td>
+                <td>{{ user.LoginName }}</td>
+                <td>{{ user.AreaCode }}</td>
+                <td>{{ user.CityID }}</td>
+                <td>{{ user.RouteCode }}</td>
+                <td>{{ user.ParentCode }}</td>
+            </tr>
+            {% end for %}
+        </tbody>
+    </table>
+</body>
+</html>

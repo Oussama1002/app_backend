@@ -1,0 +1,330 @@
+{% include 'routes/navbar.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Assignment</title>
+   <style>
+        /* Basic reset for padding and margins */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #555;
+        }
+
+        #userSelection {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #routesContainer {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            width: 45%;
+        }
+
+        .section h3 {
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .route-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .route-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .route-list input {
+            margin-right: 10px;
+        }
+
+        .removeRoute {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .removeRoute:hover {
+            background-color: #c0392b;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Modal styles */
+        #userListModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
+        }
+
+        #userListModalContent {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f9;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h2>Route Assignment</h2>
+
+    <div id="userSelection">
+        <label for="users">Select User: </label>
+        <select id="users" name="users" onchange="loadUserRoutes(this.value)">
+            <option value="">Select a user</option>
+            <!-- User options will be populated here -->
+            {% for user in users %}
+            <option value="{{ user.UserCode }}">{{ user.UserName }}</option>
+            {% endfor %}
+        </select>
+        <button id="findUsers" onclick="findUsers()">Find</button>
+    </div>
+
+    <div id="routesContainer">
+        <div class="section" id="availableRoutesSection">
+            <h3>Available Routes</h3>
+            <ul id="availableRoutes" class="route-list">
+                <!-- Routes will be dynamically inserted here using radio buttons instead of checkboxes -->
+            </ul>
+        </div>
+        <div class="section" id="userRoutesSection">
+            <h3>User's Route</h3>
+            <ul id="userRoutes" class="route-list">
+                <!-- User's assigned routes will be dynamically inserted here -->
+            </ul>
+        </div>
+    </div>
+
+    <button id="assignRoute" onclick="assignRoute()">Assign Selected Route</button>
+
+    <!-- Modal for displaying the user list -->
+    <div id="userListModal">
+        <div id="userListModalContent">
+            <h3>Select a User</h3>
+            <table id="userListTable">
+                <thead>
+                    <tr>
+                        <th>UserCode</th>
+                        <th>UserName</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="userList">
+                    <!-- User list will be dynamically populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+<script>
+        // Function to fetch and display user list in a table
+        function findUsers() {
+            $.ajax({
+                url: "{% url 'get_users' %}",
+                success: function(data) {
+                    $('#userList').empty(); // Clear any existing rows
+                    data.users.forEach(function(user) {
+                        $('#userList').append(
+                            '<tr>' +
+                            '<td>' + user.UserCode + '</td>' +
+                            '<td>' + user.UserName + '</td>' +
+                            '<td><button onclick="selectUser(\'' + user.UserCode + '\', \'' + user.UserName + '\')">Select</button></td>' +
+                            '</tr>'
+                        );
+                    });
+                    $('#userListModal').show();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch users:', error);
+                    alert('Failed to fetch users: ' + error);
+                }
+            });
+        }
+
+        // Function to handle the selection of a user
+        function selectUser(userCode, userName) {
+            $('#users').val(userCode).change();
+            $('#userListModal').hide();
+        }
+
+        // Function to load user routes based on selected user
+        function loadUserRoutes(userId) {
+            if (userId) {
+                $.ajax({
+                    url: "{% url 'affectation_routes_users' %}",
+                    data: { action: 'get_user_routes', user_code: userId },
+                    success: function(data) {
+                        $('#availableRoutes').empty();
+                        data.unlinked_routes.forEach(function(route) {
+                            $('#availableRoutes').append(
+                                '<li>' +
+                                '<label><input type="radio" name="route" value="' + route.Route_ID + '">' + route.Route_Description + '</label>' +
+                                '</li>'
+                            );
+                        });
+
+                        $('#userRoutes').empty();
+                        if (data.linked_routes.length > 0) {
+                            const route = data.linked_routes[0];
+                            $('#userRoutes').append(
+                                '<li>' + route.Route_Description +
+                                '<button class="removeRoute" onclick="removeRoute(' + route.Route_ID + ')">Remove</button></li>'
+                            );
+                        }
+                        $('#routesContainer').show();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to fetch user routes:', error);
+                        alert('Failed to fetch user routes: ' + error);
+                    }
+                });
+            } else {
+                $('#routesContainer').hide();
+            }
+        }
+
+        // Assign the selected route to the user
+        function assignRoute() {
+            var selectedRoute = $('input[name="route"]:checked').val();
+            var userId = $('#users').val();
+            if (selectedRoute && userId) {
+                $.ajax({
+                    url: "{% url 'assign_user_to_route' %}",
+                    type: 'POST',
+                    data: {
+                        route_id: selectedRoute,
+                        user_code: userId,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            alert('Route assigned successfully');
+                            loadUserRoutes(userId); // Reload routes to reflect changes
+                        } else {
+                            alert('Failed to assign route: ' + data.error);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Failed to assign route: ' + error);
+                    }
+                });
+            } else {
+                alert('Please select a user and a route');
+            }
+        }
+
+        // Remove the user's route
+        function removeRoute(routeId) {
+            var userId = $('#users').val();
+            if (userId && routeId) {
+                $.ajax({
+                    url: "{% url 'assign_user_to_route' %}",
+                    type: 'POST',
+                    data: {
+                        route_id: routeId,
+                        user_code: userId,
+                        action: 'remove',
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            alert('Route removed successfully');
+                            loadUserRoutes(userId); // Reload routes to reflect changes
+                        } else {
+                            alert('Failed to remove route: ' + data.error);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Failed to remove route: ' + error);
+                    }
+                });
+            } else {
+                alert('Invalid user or route');
+            }
+        }
+    </script></body>
+</html>
