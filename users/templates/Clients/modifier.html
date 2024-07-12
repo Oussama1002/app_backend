@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modifier le Client</title>
+</head>
+<body>
+    <h1>Modifier le Client</h1>
+    <form class="form " method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enregistrer les modifications</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Routes</title>
+         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .navbar {
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn-custom {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-custom:hover {
+            background-color: #218838;
+        }
+    </style>
+    <style>
+        .navbar {
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn-custom {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-custom:hover {
+            background-color: #218838;
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 3%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 1430px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Ajustez l'espacement entre les éléments du formulaire */
+            justify-content: space-between;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            flex: 1; /* Ajustez la taille des groupes d'entrées pour qu'ils occupent la même largeur */
+        }
+
+        .input-group label {
+            background-color: #2262c6;
+            padding: 8px;
+            border-radius: 5px 0 0 5px;
+            margin-top: 10px;
+            color: white;
+            min-width: 120px; /* Ajustez la largeur minimale des étiquettes pour une taille uniforme */
+            text-align: center; /* Centrez le texte dans les étiquettes */
+        }
+
+        .input-group .form-control {
+            border-radius: 0 5px 5px 0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            flex: 1; /* Ajustez la largeur des champs de saisie pour qu'ils occupent tout l'espace disponible */
+            min-width: 150px; /* Ajustez la largeur minimale des champs de saisie pour une taille uniforme */
+        }
+
+        .short-input {
+            max-width: 200px; /* Ajustez la largeur maximale des champs courts si nécessaire */
+        }
+        h1 {
+            color: #0056b3;
+            font-family: 'Poppins', sans-serif; /* Appliquer la nouvelle police */
+            font-weight: 600; /* Utiliser un poids de police approprié */
+            font-size: 200%;
+        }
+        h2 {
+            color: #0056b3;
+            font-family: 'Poppins', sans-serif; /* Appliquer la nouvelle police */
+            font-weight: 600; /* Utiliser un poids de police approprié */
+            font-size: 200%;
+        }
+        button.btn-primary {
+            background-color: #81bae7;
+            border: none;
+            padding: 10px 20px;
+            margin-top: -9px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            align-self: center; /* Centrez le bouton dans le conteneur flex */
+        }
+        button.btn-primary:hover {
+            background-color: #0056b3;
+        }
+        button.btn-primary:hover {
+            background-color: #0056b3;
+        }
+        th {
+            background-color: #2262c6;
+        }
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        tr{
+            color: black;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+            border: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+    </style>
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">My Project</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item ">
+                <a class="nav-link" href="{% url 'users' %}">Users</a>
+            </li>
+                     <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'users' %}">Clients</a>
+                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'devices' %}">Devices</a>
+            </li>
+            <li class="nav-item active dropdown">
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'routes' %}" aria-expanded="false">Routes</a>
+                <ul class="dropdown-menu">
+                                                     <li><a class="dropdown-item" href="{% url 'routes' %}">Routes</a></li>
+           <li><hr class="dropdown-divider"></li>
+
+<li><a class="dropdown-item" href="{% url 'affectation_routes_users' %}">Affectation Routes-Users</a></li>
+                                <li><hr class="dropdown-divider"></li>
+
+                             <li><a class="dropdown-item" href="{% url 'affectation_clients_routes' %}">Affectation Routes-Clients</a></li>
+                </ul>
+            </li>
+             <li class="nav-item  dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'promotions' %}">Promotions</a>
+                     <ul class="dropdown-menu">
+                                                      <li><a class="dropdown-item" href="{% url 'promotions' %}">Promotions</a></li>
+
+           <li><hr class="dropdown-divider"></li>
+                                                     <li><a class="dropdown-item" href="{% url 'assign_promotions' %}">Assign Promotions</a></li>
+
+                                <li><hr class="dropdown-divider"></li>
+
+                             <li><a class="dropdown-item" href="{% url 'define_basket' %}">Define Basket</a></li>
+                </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>

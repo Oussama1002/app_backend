@@ -1,0 +1,91 @@
+{% include 'promotions/navbar.html' %}
+
+<body>
+
+    <div class="container-fluid">
+
+        <a href="{% url 'Clients' %}" class="btn btn-primary">Ajouter</a>
+        <a href="{% url 'home' %}" class="btn btn-primary">Retour à l'accueil</a>
+        <a href="{% url 'upload_excel' %}" class="btn btn-secondary float-right">upload from excel</a>
+        <div class="container-fluid">
+            <div class="d-flex justify-content-center align-items-center mb-4">
+                <form method="post" action="{% url 'search_client' %}" class="form-inline">
+                    {% csrf_token %}
+                    <input type="text" class="form-control mr-2" name="client_code" placeholder="Rechercher client">
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        {% if clients %}
+        <div class="mt-4">
+            <h2>Résultats de la recherche</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Code Client</th>
+                    <th>Code Zone</th>
+                    <th>Description</th>
+                    <th>Description Alternative</th>
+                    <th>Code Terme de Paiement</th>
+                    <th>Email</th>
+                    <th>Adresse</th>
+                    <th>Adresse Alternative</th>
+                    <th>Personne de Contact</th>
+                    <th>Numéro de Téléphone</th>
+                    <th>Code Barre</th>
+                    <th>Statut du Client</th>
+                    <th>action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td>{{ client.Client_Code }}</td>
+                    <td>{{ client.Area_Code }}</td>
+                    <td>{{ client.Client_Description }}</td>
+                    <td>{{ client.Client_Alt_Description }}</td>
+                    <td>{{ client.Payment_Term_Code }}</td>
+                    <td>{{ client.Email }}</td>
+                    <td>{{ client.Address }}</td>
+                    <td>{{ client.Alt_Address }}</td>
+                    <td>{{ client.Contact_Person }}</td>
+                    <td>{{ client.Phone_Number }}</td>
+                    <td>{{ client.Barcode }}</td>
+                    <td>{{ client.Client_Status_ID }}</td>
+                    <td>
+                        <a href="{% url 'edit_client' client.Client_Code %}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{% url 'delete_client' client.Client_Code %}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% elif query %}
+    <div class="mt-4">
+        <p>Aucun client ne correspond à ce code client.</p>
+    </div>
+    {% endif %}
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

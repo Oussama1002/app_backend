@@ -1,0 +1,57 @@
+{% include 'promotions/navbar.html' %}
+<body>
+        
+<div class="container">
+    <h1>Ajouter un client</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.Area_Code.id_for_label }}">Code Zone:</label>
+            {{ form.Area_Code }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Client_Description.id_for_label }}">Description:</label>
+            {{ form.Client_Description }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Client_Alt_Description.id_for_label }}">ALT Description :</label>
+            {{ form.Client_Alt_Description }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Payment_Term_Code.id_for_label }}">Code Terme de Paiement:</label>
+            {{ form.Payment_Term_Code }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Email.id_for_label }}">Email:</label>
+            {{ form.Email }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Address.id_for_label }}">Adresse:</label>
+            {{ form.Address }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Alt_Address.id_for_label }}">ALT Adresse:</label>
+            {{ form.Alt_Address }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Contact_Person.id_for_label }}">Personne de Contact:</label>
+            {{ form.Contact_Person }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Phone_Number.id_for_label }}">Téléphone:</label>
+            {{ form.Phone_Number }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Barcode.id_for_label }}">Barcode:</label>
+            {{ form.Barcode }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.Client_Status_ID.id_for_label }}">Statut Client:</label>
+            {{ form.Client_Status_ID }}
+        </div>
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+    </form>
+</div>
+
+</body>

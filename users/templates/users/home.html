@@ -1,0 +1,468 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-r/A0oRz0ABDa6SbQv5KP9ohFQIrB8aG39/ALq52/tiaVWGbpNEc1i29imUHXWY+ZavM0i2xX2DZQl2JWgmwZlQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .navbar {
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn-custom {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-custom:hover {
+            background-color: #218838;
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 3%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 1430px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Ajustez l'espacement entre les éléments du formulaire */
+            justify-content: space-between;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            flex: 1; /* Ajustez la taille des groupes d'entrées pour qu'ils occupent la même largeur */
+        }
+
+        .input-group label {
+            background-color: #2262c6;
+            padding: 8px;
+            border-radius: 5px 0 0 5px;
+            margin-top: 10px;
+            color: white;
+            min-width: 120px; /* Ajustez la largeur minimale des étiquettes pour une taille uniforme */
+            text-align: center; /* Centrez le texte dans les étiquettes */
+        }
+
+        .input-group .form-control {
+            border-radius: 0 5px 5px 0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            flex: 1; /* Ajustez la largeur des champs de saisie pour qu'ils occupent tout l'espace disponible */
+            min-width: 150px; /* Ajustez la largeur minimale des champs de saisie pour une taille uniforme */
+        }
+
+        .short-input {
+            max-width: 200px; /* Ajustez la largeur maximale des champs courts si nécessaire */
+        }
+        h1 {
+            color: #0056b3;
+            font-family: 'Poppins', sans-serif; /* Appliquer la nouvelle police */
+            font-weight: 600; /* Utiliser un poids de police approprié */
+            font-size: 200%;
+        }
+        h2 {
+            color: #0056b3;
+            font-family: 'Poppins', sans-serif; /* Appliquer la nouvelle police */
+            font-weight: 600; /* Utiliser un poids de police approprié */
+            font-size: 200%;
+        }
+        button.btn-primary {
+            background-color: #81bae7;
+            border: none;
+            padding: 10px 20px;
+            margin-top: -9px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            align-self: center; /* Centrez le bouton dans le conteneur flex */
+        }
+        button.btn-primary:hover {
+            background-color: #0056b3;
+        }
+        button.btn-primary:hover {
+            background-color: #0056b3;
+        }
+        th {
+            background-color: #2262c6;
+        }
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        tr{
+            color: black;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+            border: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+    </style>
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="bg.png" alt="My Project" style="height: 80px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'users' %}">Users</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{% url 'clients' %}">Clients</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'devices' %}">Devices</a>
+            </li>
+            <li class="nav-item  dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'routes' %}" aria-expanded="false">Routes</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'routes' %}">Routes</a></li>
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" href="{% url 'routes' %}">Affectation Routes-Users</a></li>
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" href="{% url 'routes' %}">Affectation Routes-Clients</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'promotions' %}">Promotion</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<body>
+<form method="get" action="{% url 'users' %}">
+    <div class="form-container">
+        <div class="form-row">
+            <div class="form-group input-group">
+                <label for="user_code" class="mr-2">User Code:</label>
+                <input type="text" id="user_code" name="user_code" class="form-control short-input" value="{{ request.GET.user_code }}" autocomplete="off">
+            </div>
+            <div class="form-group input-group">
+                <label for="user_name" class="mr-2">User Name:</label>
+                <input type="text" id="user_name" name="user_name" class="form-control short-input" value="{{ request.GET.user_name }}" autocomplete="off">
+            </div>
+            <div class="form-group input-group">
+                <label for="phone_number" class="mr-2">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" class="form-control short-input" value="{{ request.GET.phone_number }}" autocomplete="off">
+            </div>
+            <div class="form-group input-group">
+                <label for="type_user" class="mr-2 w-6 h-6">User Type:</label>
+                <select id="type_user" name="type_user" class="form-control short-input" autocomplete="off">
+                    <option value="">Select User Type</option>
+                    <option value="HHT User" {% if request.GET.type_user == "HHT User" %}selected{% endif %}>HHT User</option>
+                    <option value="Other User" {% if request.GET.type_user == "Other User" %}selected{% endif %}>Other User</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+
+
+<div style="height: 200px; overflow-y: scroll;">
+        <h1>User List</h1>
+        <table id="users-table">
+            <thead>
+                <tr>
+                    <th>User Code</th>
+                    <th>User Name</th>
+                    <th>Phone Number</th>
+                    <th>Grouping</th>
+                    <th>Is Blocked</th>
+                    <th>Login Name</th>
+                    <th>Area Code</th>
+                    <th>City ID</th>
+                    <th>Route Code</th>
+                    <th>Parent Code</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr class="user-row" data-user-code="{{ user.UserCode }}">
+                    <td>{{ user.UserCode }}</td>
+                    <td>{{ user.UserName }}</td>
+                    <td>{{ user.PhoneNumber }}</td>
+                    <td>{{ user.Grouping }}</td>
+                    <td>{{ user.IsBlocked }}</td>
+                    <td>{{ user.LoginName }}</td>
+                    <td>{{ user.AreaCode }}</td>
+                    <td>{{ user.CityID }}</td>
+                    <td>{{ user.RouteCode }}</td>
+                    <td>{{ user.ParentCode }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUserModal"
+                                data-user-code="{{ user.UserCode }}"
+                                data-user-name="{{ user.UserName }}"
+                                data-phone-number="{{ user.PhoneNumber }}"
+                                data-grouping="{{ user.Grouping }}"
+                                data-is-blocked="{{ user.IsBlocked }}"
+                                data-login-name="{{ user.LoginName }}"
+                                data-area-code="{{ user.AreaCode }}"
+                                data-city-id="{{ user.CityID }}"
+                                data-route-code="{{ user.RouteCode }}"
+                                data-parent-code="{{ user.ParentCode }}">
+                                  <i class="fas fa-edit"></i>
+
+                        </button>                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit User Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="editUserForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="edit_user_code" name="user_code">
+                    <!-- Add hidden method field for PUT request -->
+                    <input type="hidden" name="_method" value="put">
+                    <div class="form-group">
+                        <label for="edit_user_name">User Name:</label>
+                        <input type="text" id="edit_user_name" name="user_name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_phone_number">Phone Number:</label>
+                        <input type="text" id="edit_phone_number" name="phone_number" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_grouping">Grouping:</label>
+                        <input type="text" id="edit_grouping" name="grouping" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_is_blocked">Is Blocked:</label>
+                        <input type="text" id="edit_is_blocked" name="is_blocked" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_login_name">Login Name:</label>
+                        <input type="text" id="edit_login_name" name="login_name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_area_code">Area Code:</label>
+                        <input type="text" id="edit_area_code" name="area_code" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_city_id">City ID:</label>
+                        <input type="text" id="edit_city_id" name="city_id" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_route_code">Route Code:</label>
+                        <input type="text" id="edit_route_code" name="route_code" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_parent_code">Parent Code:</label>
+                        <input type="text" id="edit_parent_code" name="parent_code" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+     <div style="height: 300px; overflow-y: scroll;">
+        <h2>Parameters List</h2>
+        <table id="parameters-table">
+            <thead>
+                <tr>
+                    <th>Parameter Name</th>
+                    <th>Parameter Type</th>
+                    <th>Default Value</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input type="text" id="search-parameter-name" onkeyup="searchParameter('parameter-name', 0)" placeholder="Search Parameter Name">
+                    </th>
+                    <th>
+                        <input type="text" id="search-parameter-type" onkeyup="searchParameter('parameter-type', 1)" placeholder="Search Parameter Type">
+                    </th>
+                    <th>
+                        <input type="text" id="search-default-value" onkeyup="searchParameter('default-value', 2)" placeholder="Search Default Value">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for parameter in parameters %}
+                <tr>
+                    <td>{{ parameter.ParameterName }}</td>
+                    <td>{{ parameter.ParameterType }}</td>
+                    <td>{{ parameter.DefaultValue }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+
+<script>
+    // Set form action URL and pre-fill form with user data
+    $('#editUserModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var userCode = button.data('user-code');
+        var userName = button.data('user-name');
+        var phoneNumber = button.data('phone-number');
+        var grouping = button.data('grouping');
+        var isBlocked = button.data('is-blocked');
+        var loginName = button.data('login-name');
+        var areaCode = button.data('area-code');
+        var cityId = button.data('city-id');
+        var routeCode = button.data('route-code');
+        var parentCode = button.data('parent-code');
+
+        var modal = $(this);
+        modal.find('#edit_user_code').val(userCode);
+        modal.find('#edit_user_name').val(userName);
+        modal.find('#edit_phone_number').val(phoneNumber);
+        modal.find('#edit_grouping').val(grouping);
+        modal.find('#edit_is_blocked').val(isBlocked);
+        modal.find('#edit_login_name').val(loginName);
+        modal.find('#edit_area_code').val(areaCode);
+        modal.find('#edit_city_id').val(cityId);
+        modal.find('#edit_route_code').val(routeCode);
+        modal.find('#edit_parent_code').val(parentCode);
+
+        // Set form action dynamically
+        var actionUrl = "{% url 'edit_user' 0 %}".replace('0', userCode);
+        $('#editUserForm').attr('action', actionUrl);
+    });
+
+    // Function to handle fetching parameters for a specific user
+    function fetchParameters(userCode) {
+        fetch(`/user_parameters/${userCode}/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    console.error('Error:', data.error);
+                    return;
+                }
+                updateParametersTable(data);
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    // Function to update the parameters table with fetched data
+    function updateParametersTable(parameters) {
+        const tableBody = document.querySelector('#parameters-table tbody');
+        tableBody.innerHTML = '';
+        parameters.forEach(param => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${param.ParameterName}</td>
+                <td>${param.ParameterType}</td>
+                <td>${param.DefaultValue}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Add event listener to each user row to fetch parameters on click
+    document.querySelectorAll('.user-row').forEach(row => {
+        row.addEventListener('click', function () {
+            const userCode = this.getAttribute('data-user-code');
+            fetchParameters(userCode);
+        });
+    });
+</script>
+

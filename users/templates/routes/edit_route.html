@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Route</title>
+</head>
+<body>
+    <h2>Edit Route</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="route_name">Route Name:</label>
+            <input type="text" id="route_name" name="route_name" value="{{ route.Route_Description }}" required>
+        </div>
+        <div>
+            <label for="region_code">Region Code:</label>
+            <input type="text" id="region_code" name="region_code" value="{{ route.Region_Code }}" required>
+        </div>
+        <button type="submit">Update Route</button>
+    </form>
+</body>
+</html>

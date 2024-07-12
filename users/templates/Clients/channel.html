@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>channels</title>
+</head>
+<body>
+    <h1>channels</h1>
+    <form class="form " method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit">Enregistrer</button>
+    </form>
+</body>
+</html>

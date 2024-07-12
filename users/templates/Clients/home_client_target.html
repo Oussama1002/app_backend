@@ -1,0 +1,46 @@
+{% include 'promotions/navbar.html' %}
+
+<body>
+    <div class="container-fluid">
+        <!-- Search Form -->
+        <form method="GET" action="" class="mb-4">
+            <!-- Vos champs de recherche ici -->
+        </form>
+
+        <h1>Liste des Clients Target</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Code Client</th>
+                    <th>Mois</th>
+                    <th>Année</th>
+                    <th>Targed_Achieved</th>
+                    <th>Target_value</th>
+                    <th>Stamp_Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td>{{ client.Client_Code }}</td>
+                    <td>{{ client.Month }}</td>
+                    <td>{{ client.years }}</td>
+                    <td>{{ client.Targed_Achieved }}</td>
+                    <td>{{ client.Target_value }}</td>
+                    <td>{{ client.Stamp_Date }}</td>
+                    
+                    <td>
+                        <a href="{% url 'client_target_edit' client.Client_Code %}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{% url 'delete_target' client.Client_Code %}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <a href="{% url 'client_target' %}" class="btn btn-primary">Ajouter</a>
+        <a href="{% url 'home' %}" class="btn btn-primary">Retour à l'accueil</a>
+
+</body>
+</html>

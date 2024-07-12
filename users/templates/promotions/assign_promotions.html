@@ -1,0 +1,85 @@
+{% include 'promotions/scripts.html' %}
+<body>
+    <h1>Assign Promotions</h1>
+
+    <div class="form-container">
+        <form method="get">
+            <input type="text" placeholder="Search..." name="search">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="promotion-list">
+        <h2>Promotions</h2>
+        <table class="styled-table">
+            <thead>
+            <tr>
+                <th>Promotion Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for promo in promotions %}
+            <tr class="clickable-row" onclick="selectPromotion('{{ promo.Promotion_ID }}')">
+                <td>{{ promo.Promotion_Description }}</td>
+                <td>{{ promo.Start_Date }}</td>
+                <td>{{ promo.End_Date }}</td>
+            </tr>
+            <tbody>
+            {% endfor %}
+        </table>
+    </div>
+
+    <input type="hidden" id="selected-promotion" value="">
+
+    <div id="filter-section" style="display: none;">
+        <h2>Filter By</h2>
+        <div class="form-container">
+            <label>
+                <input type="radio" name="filter_type" value="users" onchange="applyFilter()"> Users
+            </label>
+            <label>
+                <input type="radio" name="filter_type" value="clients" onchange="applyFilter()"> Clients
+            </label>
+        </div>
+
+        <div class="entity-container">
+            <div class="entity-list">
+                <h3>Available</h3>
+                <table id="available-entities">
+                    <!-- Content will be loaded via AJAX -->
+                </table>
+            </div>
+
+            <div class="entity-list">
+                <h3>Assigned</h3>
+                <table id="assigned-entities">
+                    <!-- Content will be loaded via AJAX -->
+                </table>
+            </div>
+        </div>
+    </div>
+<script>
+        $(document).ready(function() {
+            $('#promotion-table').on('click', 'tr', function() {
+                let promotionId = $(this).data('promotion-id');
+                loadEntities(promotionId);
+            });
+
+
+
+            $('#available-entities').on('dblclick', 'tr', function() {
+                let row = $(this).clone();
+                row.appendTo('#assigned-entities');
+                $(this).remove();
+            });
+
+            $('#assigned-entities').on('dblclick', 'tr', function() {
+                let row = $(this).clone();
+                row.appendTo('#available-entities');
+                $(this).remove();
+            });
+        });
+    </script>
+</body>

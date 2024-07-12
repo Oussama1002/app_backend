@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Devices</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .navbar {
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #a2a2a2;
+        }
+
+        th {
+            background-color: #2262c6;
+        }
+
+        .btn-custom {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-custom:hover {
+            background-color: #218838;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 3%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Adjust spacing between form elements */
+            justify-content: space-between;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .input-group label {
+            background-color: #2262c6;
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            color: white;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 5px 5px 0;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .short-input {
+            max-width: 200px; /* Adjust the width as needed */
+        }
+
+        button.btn-primary {
+            background-color: #81bae7;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            align-self: center; /* Center align the button within the flex container */
+        }
+
+        button.btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            color: #0056b3;
+            font-family: 'Poppins', sans-serif; /* Appliquer la nouvelle police */
+            font-weight: 600; /* Utiliser un poids de police approprié */
+            font-size: 200%;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+            border: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+
+
+        .btn {
+            background-color: #203071;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .btn:hover {
+            background-color: #203071;
+        }
+
+    </style>
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="logo_emid.png" alt="My Project" style="height: 80px;">
+    </a>
+
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{% url 'users' %}">Users</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'devices' %}">Devices</a>
+            </li>
+            <li class="nav-item  dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'routes' %}" aria-expanded="false">Routes</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'routes' %}">Routes</a></li>
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" href="{% url 'affectation_routes_users' %}">Affectation Routes-Users</a></li>
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" href="{% url 'routes' %}">Affectation Routes-Clients</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'promotions' %}">Promotion</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<body>
+    <form method="GET" action="{% url 'devices' %}" class="form-inline mb-4">
+        <div class="form-container">
+            <div class="form-row">
+
+                <div class="form-group input-group">
+                    <label for="device_serial" class="mr-2">Device Serial:</label>
+                    <input type="text" id="device_serial" name="device_serial" class="form-control short-input" value="{{ request.GET.device_serial }}" autocomplete="device-serial">
+                </div>
+                <div class="form-group input-group">
+                    <label for="device_status" class="mr-2">Device Status:</label>
+                    <select id="device_status" name="device_status" class="form-control short-input" autocomplete="off">
+                        <option value="">All</option>
+                        <option value="Good" {% if request.GET.device_status == 'Good' %}selected{% endif %}>Good</option>
+                        <option value="Broken" {% if request.GET.device_status == 'Broken' %}selected{% endif %}>Broken</option>
+                        <option value="Spare" {% if request.GET.device_status == 'Spare' %}selected{% endif %}>Spare</option>
+                    </select>
+                </div>
+                <div class="form-group input-group">
+                    <label for="device_type" class="mr-2">Device Type:</label>
+                    <select id="device_type" name="device_type" class="form-control short-input" autocomplete="off">
+                        <option value="">All</option>
+                        <option value="HHT" {% if request.GET.device_type == 'HHT' %}selected{% endif %}>HHT</option>
+                        <option value="Printer" {% if request.GET.device_type == 'Printer' %}selected{% endif %}>Printer</option>
+                    </select>
+                </div>
+                <div class="form-group input-group">
+                    <label for="device_brand" class="mr-2">Device Brand:</label>
+                    <select id="device_brand" name="device_brand" class="form-control short-input" autocomplete="off">
+                        <option value="">All</option>
+                        <option value="MOTOROLA MC65" {% if request.GET.device_brand == 'MOTOROLA MC65' %}selected{% endif %}>MOTOROLA MC65</option>
+                        <option value="Samsung" {% if request.GET.device_brand == 'Samsung' %}selected{% endif %}>Samsung</option>
+                        <option value="Brother" {% if request.GET.device_brand == 'Brother' %}selected{% endif %}>Brother</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#defineDeviceModal">
+                    Define Device
+                </button>
+            </div>
+        </div>
+
+
+
+    <!-- Add device Modal -->
+   <div class="modal fade" id="defineDeviceModal" tabindex="-1" role="dialog" aria-labelledby="defineDeviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defineDeviceModalLabel">Add New Device</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'define_device' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="device_serial_input">Device Serial:</label>
+                        <input type="text" id="device_serial_input" name="device_serial" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="device_brand_input">Device Brand:</label>
+                        <select id="device_brand_input" name="device_brand" class="form-control" autocomplete="off">
+                            <option value="MOTOROLA MC65">MOTOROLA MC65</option>
+                            <option value="Samsung">Samsung</option>
+                            <option value="Brother">Brother</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="device_type_input"> Device Type:</label>
+                        <select id="device_type_input" name="device_type" class="form-control" autocomplete="off">
+                            <option value="HHT">HHT</option>
+                            <option value="Printer">Printer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="device_status_input">Device Status:</label>
+                        <select id="device_status_input" name="device_status" class="form-control" autocomplete="off">
+                            <option value="Good">Good</option>
+                            <option value="Broken">Broken</option>
+                            <option value="Spare">Spare</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Device</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <h1 class="text">Device Registrations</h1>
+        <table class="styled-table">
+            <thead>
+            <tr>
+                <th>User Code</th>
+                <th>User Name</th>
+                <th>Device Serial</th>
+                <th>Device Type</th>
+                <th>Device Brand</th>
+                <th>Device Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for device in devices %}
+            <tr>
+                <td>{{ device.UserCode }}</td>
+                <td>{{ device.UserName }}</td>
+                <td>{{ device.DeviceSerial }}</td>
+                <td>{{ device.DeviceType }}</td>
+                <td>{{ device.DeviceBrand }}</td>
+                <td>{{ device.DeviceStatus }}</td>
+                <td>
+                    <button type="button" class="btn btn-warning" onclick="editDevice(this)">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+<script>$('#defineDeviceModal').on('hidden.bs.modal', function() {
+            $(this).find('form')[0].reset();
+        });</script>
+    <!-- Edit Device Modal -->
+    <div class="modal fade" id="editDeviceModal" tabindex="-1" role="dialog" aria-labelledby="editDeviceModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDeviceModalLabel">Edit Device</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editDeviceForm">
+                        <div class="form-group">
+                            <label for="editUserCode">User Code</label>
+                            <input type="text" class="form-control" id="editUserCode" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserName">User Name</label>
+                            <input type="text" class="form-control" id="editUserName">
+                        </div>
+                        <div class="form-group">
+                            <label for="editDeviceSerial">Device Serial</label>
+                            <input type="text" class="form-control" id="editDeviceSerial">
+                        </div>
+                        <div class="form-group">
+                            <label for="editDeviceType">Device Type</label>
+                            <input type="text" class="form-control" id="editDeviceType">
+                        </div>
+                        <div class="form-group">
+                            <label for="editDeviceBrand">Device Brand</label>
+                            <input type="text" class="form-control" id="editDeviceBrand">
+                        </div>
+                        <div class="form-group">
+                            <label for="editDeviceStatus">Device Status</label>
+                            <input type="text" class="form-control" id="editDeviceStatus">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="saveDevice()">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Users List -->
+    <div class="modal fade" id="usersModal" tabindex="-1" role="dialog" aria-labelledby="usersModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="usersModalLabel">Select User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>User Code</th>
+                                <th>User Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- User rows will be appended here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Modal for devices   List -->
+    <div class="modal fade" id="devicesModal" tabindex="-1" role="dialog" aria-labelledby="devicesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="devicesModalLabel">Select Device</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover" id="devicesTable">
+                        <thead>
+                            <tr>
+                                <th>Device Serial</th>
+                                <th>Device Brand</th>
+                                <th>Device Status</th>
+                                <th>Device Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- User rows will be appended here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function editDevice(button) {
+            var row = button.parentNode.parentNode;
+            var userCode = row.cells[0].innerText;
+            var userName = document.getElementById('editUserName').value;
+
+            var deviceSerial = row.cells[2].innerText;
+            var deviceType = row.cells[3].innerText;
+            var deviceBrand = row.cells[4].innerText;
+            var deviceStatus = row.cells[5].innerText;
+
+            document.getElementById('editUserCode').value = userCode;
+            document.getElementById('editUserName').value = userName;
+            document.getElementById('editDeviceSerial').value = deviceSerial;
+            document.getElementById('editDeviceType').value = deviceType;
+            document.getElementById('editDeviceBrand').value = deviceBrand;
+            document.getElementById('editDeviceStatus').value = deviceStatus;
+
+            $('#editDeviceModal').modal('show');
+        }
+
+    function saveDevice() {
+    var userCode = document.getElementById('editUserCode').value;
+    var deviceSerial = document.getElementById('editDeviceSerial').value;
+    var deviceType = document.getElementById('editDeviceType').value;
+    var deviceBrand = document.getElementById('editDeviceBrand').value;
+    var deviceStatus = document.getElementById('editDeviceStatus').value;
+
+    $.ajax({
+        url: '{% url "update_device" %}',
+        method: 'POST',
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            userCode: userCode,
+            deviceSerial: deviceSerial,
+            deviceType: deviceType,
+            deviceBrand: deviceBrand,
+            deviceStatus: deviceStatus
+        },
+        success: function(response) {
+            alert('Device updated successfully');
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            var err = JSON.parse(xhr.responseText);
+            alert('Failed to update device: ' + err.message);
+        }
+    });
+}
+
+
+
+
+   function openUsersModal() {
+    $.ajax({
+        url: '{% url "fetch_users" %}',  // URL for fetching users
+        method: 'GET',
+        success: function(response) {
+            var usersTableBody = document.getElementById('usersTable').querySelector('tbody');
+            usersTableBody.innerHTML = ''; // Clear previous rows
+
+            response.users.forEach(function(user) {
+                var row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.UserCode}</td>
+                    <td>${user.UserName}</td>
+                `;
+                row.onclick = function() {
+                    selectUser(user.UserCode, user.UserName);
+                };
+                usersTableBody.appendChild(row);
+            });
+
+            $('#usersModal').modal('show'); // Show the modal
+        },
+        error: function(error) {
+            console.error('Failed to fetch users', error);
+        }
+    });
+}
+function openDevicesModal() {
+    $.ajax({
+        url: '{% url "fetch_devices" %}',  // URL for fetching devices
+        method: 'GET',
+        success: function(response) {
+            var devicesTableBody = document.getElementById('devicesTable').querySelector('tbody');
+            devicesTableBody.innerHTML = ''; // Clear previous rows
+
+            // Use response.devices instead of response.users
+            response.devices.forEach(function(device) {
+                var row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${device.DeviceSerial}</td>
+                    <td>${device.DeviceStatus}</td>
+                    <td>${device.DeviceBrand}</td>
+                    <td>${device.DeviceType}</td>
+                `;
+                row.onclick = function() {
+                    selectDevice(device.DeviceSerial, device.DeviceStatus, device.DeviceBrand, device.DeviceType);
+                };
+                devicesTableBody.appendChild(row);
+            });
+
+            $('#devicesModal').modal('show'); // Show the modal
+        },
+        error: function(error) {
+            console.error('Failed to fetch devices', error);
+        }
+    });
+}
+
+function selectDevice(deviceSerial, deviceStatus, deviceBrand, deviceType) {
+    // Example function to handle device selection
+    console.log('Selected device:', deviceSerial, deviceStatus, deviceBrand, deviceType);
+    // You can add your logic here to handle the selected device
+    $('#devicesModal').modal('hide'); // Close the modal
+}
+
+
+
+
+function selectUser(userCode, userName) {
+    document.getElementById('editUserCode').value = userCode;
+    document.getElementById('editUserName').value = userName;
+    $('#usersModal').modal('hide');
+}
+        document.getElementById('editDeviceSerial').addEventListener('click', openDevicesModal);
+
+
+        document.getElementById('editUserName').addEventListener('click', openUsersModal);
+    </script>
+</body>

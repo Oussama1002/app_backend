@@ -1,0 +1,51 @@
+{% include 'promotions/navbar.html' %}
+
+<body>
+    <div class="container-fluid">
+        <!-- Search Form -->
+        <form method="GET" action="" class="mb-4">
+            <!-- Vos champs de recherche ici -->
+        </form>
+
+        <h1>Liste des Clients Discounts</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Code Client</th>
+                    <th>Code Transaction</th>
+                    <th>Réductions</th>
+                    <th>Mois</th>
+                    <th>Année</th>
+                    <th>Libellé Réductions</th>
+                    <th>Appliqué</th>
+                    <th>Date de Tampon</th>
+                    <th>Code Article Affecté</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td>{{ client.Client_Code }}</td>
+                    <td>{{ client.Trx_Code }}</td>
+                    <td>{{ client.Discounts }}</td>
+                    <td>{{ client.Month }}</td>
+                    <td>{{ client.Years }}</td>
+                    <td>{{ client.Discounts_label }}</td>
+                    <td>{{ client.Applied }}</td>
+                    <td>{{ client.Stamp_Date }}</td>
+                    <td>{{ client.Affected_item_code }}</td>
+                    <td>
+                        <a href="{% url 'client_discounts_edit' client.Client_Code %}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{% url 'delete_discounts' client.Client_Code %}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <a href="{% url 'client_discounts' %}" class="btn btn-primary">Ajouter</a>
+        <a href="{% url 'home' %}" class="btn btn-primary">Retour à l'accueil</a>
+
+</body>
+</html>

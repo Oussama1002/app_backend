@@ -1,0 +1,12 @@
+{% include 'promotions/navbar.html' %}
+
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="xlxfile" accept=".xlsx, .xlsm">
+        <button type="submit">soumettre</button>
+    </form>
+    
+
+</body>
+</html>
